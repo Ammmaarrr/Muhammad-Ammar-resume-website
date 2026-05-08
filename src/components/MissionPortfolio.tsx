@@ -282,11 +282,16 @@ function HeroSection() {
           <div className="mt-8 sm:mt-10 flex flex-col items-center gap-4">
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
               <a
-                href="/Muhammad-Ammar-CV.pdf"
-                download
-                className="hud-corner relative inline-flex items-center justify-center gap-2 border border-mission-green/70 bg-mission-green/15 px-5 py-3 text-xs uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono"
+                href={CV_DOWNLOAD_URL}
+                download={CV_FILE_NAME}
+                className="group hud-corner relative inline-flex items-center justify-center gap-3 border-2 border-mission-green bg-mission-green/20 px-7 py-4 text-sm sm:text-base uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/30 transition-all font-mono font-bold shadow-[0_0_30px_oklch(0.78_0.2_145_/_0.35)] hover:shadow-[0_0_50px_oklch(0.78_0.2_145_/_0.6)]"
+                aria-label="Download Muhammad Ammar's CV"
               >
-                ▼ Download CV
+                <span aria-hidden className="text-lg">▼</span>
+                <span>Download CV</span>
+                <span className="hidden sm:inline text-[9px] tracking-[0.2em] opacity-70 border-l border-mission-green/40 pl-3">
+                  PDF · DOSSIER
+                </span>
               </a>
               <a
                 href="#comms"
