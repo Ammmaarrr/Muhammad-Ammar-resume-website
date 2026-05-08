@@ -1,14 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import ammarPhoto from "@/assets/ammar.jpeg";
 
-/* ========== Star Field ========== */
+/* ========== Star Field (client-only to avoid SSR/CSS precision mismatch) ========== */
 function StarField() {
-  // Deterministic pseudo-random so SSR & client match (no hydration mismatch)
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
   const rand = (seed: number) => {
     const x = Math.sin(seed * 9301 + 49297) * 233280;
     return x - Math.floor(x);
   };
-  const stars = Array.from({ length: 140 }).map((_, i) => ({
+  // Fewer stars on small screens
+  const isSmall = typeof window !== "undefined" && window.innerWidth < 640;
+  const count = isSmall ? 70 : 140;
+  const stars = Array.from({ length: count }).map((_, i) => ({
     id: i,
     x: rand(i + 1) * 100,
     y: rand(i + 2.3) * 100,
@@ -33,10 +38,9 @@ function StarField() {
           }}
         />
       ))}
-      {/* Nebula blobs */}
-      <div className="absolute -top-20 -left-20 h-[500px] w-[500px] rounded-full blur-3xl opacity-30"
+      <div className="absolute -top-20 -left-20 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full blur-3xl opacity-30"
            style={{ background: "radial-gradient(circle, oklch(0.5 0.25 290), transparent 70%)" }} />
-      <div className="absolute top-1/2 -right-40 h-[600px] w-[600px] rounded-full blur-3xl opacity-25"
+      <div className="absolute top-1/2 -right-40 h-[400px] w-[400px] sm:h-[600px] sm:w-[600px] rounded-full blur-3xl opacity-25"
            style={{ background: "radial-gradient(circle, oklch(0.55 0.22 220), transparent 70%)" }} />
     </div>
   );
