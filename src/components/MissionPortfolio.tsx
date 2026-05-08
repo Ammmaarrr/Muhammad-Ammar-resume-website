@@ -140,7 +140,7 @@ function PlanetHeader({
 }: { code: string; title: string; subtitle: string; color: string; ringColor: string }) {
   return (
     <div className="relative mb-12 flex flex-col items-center text-center">
-      <div className="relative mb-6 h-40 w-40 sm:h-52 sm:w-52">
+      <div className="relative mb-6 h-28 w-28 sm:h-52 sm:w-52">
         <div className="absolute inset-0 rounded-full animate-pulse-ring" style={{ border: `2px solid ${ringColor}` }} />
         <div className="absolute inset-2 rounded-full animate-spin-slow"
              style={{ background: `radial-gradient(circle at 30% 30%, ${color}, oklch(0.1 0.04 260) 80%)`,
