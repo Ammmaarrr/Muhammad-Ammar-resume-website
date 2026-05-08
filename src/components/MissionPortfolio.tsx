@@ -204,13 +204,13 @@ function HeroSection() {
             </div>
 
             <div>
-              <h1 className="text-5xl font-black uppercase sm:text-6xl md:text-7xl text-glow text-foreground leading-[0.95]">
+              <h1 className="text-4xl font-black uppercase sm:text-6xl md:text-7xl text-glow text-foreground leading-[0.95]">
                 Muhammad
                 <br />
                 <span className="text-primary">Ammar</span>
               </h1>
-              <div className="mt-3 text-xs sm:text-sm uppercase tracking-[0.3em] text-cosmic-cyan">
-                Software Engineer • ML Enthusiast • Entrepreneur
+              <div className="mt-3 text-[10px] sm:text-sm uppercase tracking-[0.25em] sm:tracking-[0.3em] text-cosmic-cyan">
+                Software Engineer • ML • Entrepreneur
               </div>
             </div>
           </div>
