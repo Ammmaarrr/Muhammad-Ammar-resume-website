@@ -21,27 +21,34 @@ function StarField() {
     d: rand(i + 11.2) * 4,
     layer: Math.floor(rand(i + 17.9) * 3),
   }));
+  const layers: Array<typeof stars> = [[], [], []];
+  stars.forEach((s) => layers[s.layer].push(s));
+  const layerClasses = ["star-layer-1", "star-layer-2", "star-layer-3"];
+
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden">
-      {stars.map((s) => (
-        <div
-          key={s.id}
-          className="absolute rounded-full bg-white animate-twinkle"
-          style={{
-            left: `${s.x}%`,
-            top: `${s.y}%`,
-            width: `${s.s}px`,
-            height: `${s.s}px`,
-            opacity: 0.3 + s.layer * 0.25,
-            animationDelay: `${s.d}s`,
-            transform: `translateZ(0)`,
-          }}
-        />
+      {layers.map((layerStars, li) => (
+        <div key={li} className={`absolute inset-0 ${layerClasses[li]}`}>
+          {layerStars.map((s) => (
+            <div
+              key={s.id}
+              className="absolute rounded-full bg-white animate-twinkle"
+              style={{
+                left: `${s.x}%`,
+                top: `${s.y}%`,
+                width: `${s.s}px`,
+                height: `${s.s}px`,
+                opacity: 0.3 + s.layer * 0.25,
+                animationDelay: `${s.d}s`,
+              }}
+            />
+          ))}
+        </div>
       ))}
-      <div className="absolute -top-20 -left-20 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full blur-3xl opacity-30"
+      <div className="absolute -top-20 -left-20 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full blur-3xl opacity-30 animate-float-slow"
            style={{ background: "radial-gradient(circle, oklch(0.5 0.25 290), transparent 70%)" }} />
-      <div className="absolute top-1/2 -right-40 h-[400px] w-[400px] sm:h-[600px] sm:w-[600px] rounded-full blur-3xl opacity-25"
-           style={{ background: "radial-gradient(circle, oklch(0.55 0.22 220), transparent 70%)" }} />
+      <div className="absolute top-1/2 -right-40 h-[400px] w-[400px] sm:h-[600px] sm:w-[600px] rounded-full blur-3xl opacity-25 animate-float-slow"
+           style={{ background: "radial-gradient(circle, oklch(0.55 0.22 220), transparent 70%)", animationDelay: "3s" }} />
     </div>
   );
 }
@@ -96,10 +103,19 @@ function MissionClock() {
 /* ========== Rocket scrolling ========== */
 function Rocket() {
   const [progress, setProgress] = useState(0);
+  // -1 = scrolling up (point up), +1 = scrolling down (point down)
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const lastY = useRef(0);
   useEffect(() => {
     const onScroll = () => {
+      const y = window.scrollY;
       const max = document.body.scrollHeight - window.innerHeight;
-      setProgress(Math.min(1, window.scrollY / Math.max(1, max)));
+      setProgress(Math.min(1, y / Math.max(1, max)));
+      const delta = y - lastY.current;
+      if (Math.abs(delta) > 2) {
+        setDirection(delta > 0 ? 1 : -1);
+        lastY.current = y;
+      }
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -107,21 +123,32 @@ function Rocket() {
   }, []);
 
   // S-shape trajectory
-  const top = 12 + progress * 76; // % of viewport
+  const top = 12 + progress * 76;
   const left = 50 + Math.sin(progress * Math.PI * 2) * 32;
+  // Base rotation: 0deg points up (default svg), 180deg points down.
+  // Add a small sway based on the S-curve so it feels alive.
+  const sway = Math.sin(progress * Math.PI * 2) * 12;
+  const baseRotation = direction === 1 ? 180 : 0;
+  const rotation = baseRotation + sway;
 
   return (
     <div
       className="pointer-events-none fixed z-30 transition-[top,left] duration-200 ease-out hidden sm:block"
       style={{ top: `${top}vh`, left: `${left}%`, transform: "translate(-50%, -50%)" }}
     >
-      <div className="relative" style={{ transform: `rotate(${Math.sin(progress * Math.PI * 2) * 18}deg)` }}>
-        {/* Thrust */}
+      <div
+        className="relative transition-transform duration-500 ease-out"
+        style={{ transform: `rotate(${rotation}deg)` }}
+      >
+        {/* Thrust — always renders below the rocket body in its local frame,
+            so when rotated 180° it appears above the rocket (pointing back up the page) */}
         <div className="absolute left-1/2 top-full -translate-x-1/2 origin-top animate-thrust">
-          <div className="h-12 w-3 rounded-b-full"
-               style={{ background: "linear-gradient(to bottom, oklch(0.95 0.15 80), oklch(0.7 0.22 30), transparent)" }} />
+          <div
+            className="h-12 w-3 rounded-b-full"
+            style={{ background: "linear-gradient(to bottom, oklch(0.95 0.15 80), oklch(0.7 0.22 30), transparent)" }}
+          />
         </div>
-        {/* Rocket body */}
+        {/* Rocket body — nose at top of svg viewBox */}
         <svg width="44" height="64" viewBox="0 0 44 64" fill="none">
           <path d="M22 2 L34 28 L34 50 L10 50 L10 28 Z" fill="oklch(0.95 0.01 240)" stroke="oklch(0.7 0.18 220)" strokeWidth="1.2"/>
           <circle cx="22" cy="24" r="4.5" fill="oklch(0.7 0.18 220)" stroke="oklch(0.95 0.01 240)" strokeWidth="1"/>

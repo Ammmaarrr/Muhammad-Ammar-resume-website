@@ -92,8 +92,16 @@
 }
 
 @keyframes star-drift {
-  from { transform: translateY(0); }
-  to { transform: translateY(-2000px); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-40px, -60px, 0); }
+}
+@keyframes star-drift-2 {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(60px, -90px, 0); }
+}
+@keyframes star-drift-3 {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-30px, 50px, 0); }
 }
 @keyframes twinkle {
   0%, 100% { opacity: 0.4; }
@@ -129,6 +137,9 @@
 .animate-thrust { animation: thrust 0.15s ease-in-out infinite; }
 .animate-pulse-ring { animation: pulse-ring 2s ease-out infinite; }
 .animate-blink { animation: blink 1.4s ease-in-out infinite; }
+.star-layer-1 { animation: star-drift   60s linear infinite alternate; will-change: transform; }
+.star-layer-2 { animation: star-drift-2 90s linear infinite alternate; will-change: transform; }
+.star-layer-3 { animation: star-drift-3 120s linear infinite alternate; will-change: transform; }
 
 /* HUD frame */
 .hud-panel {
