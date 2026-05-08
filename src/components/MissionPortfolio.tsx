@@ -21,27 +21,34 @@ function StarField() {
     d: rand(i + 11.2) * 4,
     layer: Math.floor(rand(i + 17.9) * 3),
   }));
+  const layers: Array<typeof stars> = [[], [], []];
+  stars.forEach((s) => layers[s.layer].push(s));
+  const layerClasses = ["star-layer-1", "star-layer-2", "star-layer-3"];
+
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden">
-      {stars.map((s) => (
-        <div
-          key={s.id}
-          className="absolute rounded-full bg-white animate-twinkle"
-          style={{
-            left: `${s.x}%`,
-            top: `${s.y}%`,
-            width: `${s.s}px`,
-            height: `${s.s}px`,
-            opacity: 0.3 + s.layer * 0.25,
-            animationDelay: `${s.d}s`,
-            transform: `translateZ(0)`,
-          }}
-        />
+      {layers.map((layerStars, li) => (
+        <div key={li} className={`absolute inset-0 ${layerClasses[li]}`}>
+          {layerStars.map((s) => (
+            <div
+              key={s.id}
+              className="absolute rounded-full bg-white animate-twinkle"
+              style={{
+                left: `${s.x}%`,
+                top: `${s.y}%`,
+                width: `${s.s}px`,
+                height: `${s.s}px`,
+                opacity: 0.3 + s.layer * 0.25,
+                animationDelay: `${s.d}s`,
+              }}
+            />
+          ))}
+        </div>
       ))}
-      <div className="absolute -top-20 -left-20 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full blur-3xl opacity-30"
+      <div className="absolute -top-20 -left-20 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full blur-3xl opacity-30 animate-float-slow"
            style={{ background: "radial-gradient(circle, oklch(0.5 0.25 290), transparent 70%)" }} />
-      <div className="absolute top-1/2 -right-40 h-[400px] w-[400px] sm:h-[600px] sm:w-[600px] rounded-full blur-3xl opacity-25"
-           style={{ background: "radial-gradient(circle, oklch(0.55 0.22 220), transparent 70%)" }} />
+      <div className="absolute top-1/2 -right-40 h-[400px] w-[400px] sm:h-[600px] sm:w-[600px] rounded-full blur-3xl opacity-25 animate-float-slow"
+           style={{ background: "radial-gradient(circle, oklch(0.55 0.22 220), transparent 70%)", animationDelay: "3s" }} />
     </div>
   );
 }
