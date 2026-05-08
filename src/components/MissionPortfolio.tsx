@@ -356,7 +356,17 @@ function ExperienceSection() {
   );
 }
 
-const projects = [
+type Project = {
+  name: string;
+  tag: string;
+  desc: string;
+  bullets: string[];
+  stack: string[];
+  links?: { label: string; href: string }[];
+  badge?: string;
+};
+
+const projects: Project[] = [
   {
     name: "Wheels Predict",
     tag: "ML / Data Pipeline",
@@ -380,6 +390,22 @@ const projects = [
       "Live in production, 100+ bookings/mo",
     ],
     stack: ["React", "TypeScript", "Supabase", "Tailwind"],
+    badge: "LIVE",
+    links: [{ label: "Live Site ↗", href: "https://safar-e-giki.vercel.app/" }],
+  },
+  {
+    name: "Health-Care D",
+    tag: "Hackathon / HealthTech",
+    desc: "Healthcare platform contributed to during the 5th Global MIT Hackathon — forked & extended from the original team repository.",
+    bullets: [
+      "Built for the 5th Global MIT Hackathon",
+      "Forked & extended an existing team codebase",
+      "Healthcare workflows: patient & provider flows",
+      "Collaborative full-stack delivery under hackathon constraints",
+    ],
+    stack: ["React", "TypeScript", "Node", "Hackathon"],
+    badge: "HACKATHON",
+    links: [{ label: "GitHub ↗", href: "https://github.com/Ammmaarrr/health-care-d.git" }],
   },
   {
     name: "Virtual Qari",
