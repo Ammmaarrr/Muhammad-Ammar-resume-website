@@ -96,10 +96,19 @@ function MissionClock() {
 /* ========== Rocket scrolling ========== */
 function Rocket() {
   const [progress, setProgress] = useState(0);
+  // -1 = scrolling up (point up), +1 = scrolling down (point down)
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const lastY = useRef(0);
   useEffect(() => {
     const onScroll = () => {
+      const y = window.scrollY;
       const max = document.body.scrollHeight - window.innerHeight;
-      setProgress(Math.min(1, window.scrollY / Math.max(1, max)));
+      setProgress(Math.min(1, y / Math.max(1, max)));
+      const delta = y - lastY.current;
+      if (Math.abs(delta) > 2) {
+        setDirection(delta > 0 ? 1 : -1);
+        lastY.current = y;
+      }
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -107,21 +116,32 @@ function Rocket() {
   }, []);
 
   // S-shape trajectory
-  const top = 12 + progress * 76; // % of viewport
+  const top = 12 + progress * 76;
   const left = 50 + Math.sin(progress * Math.PI * 2) * 32;
+  // Base rotation: 0deg points up (default svg), 180deg points down.
+  // Add a small sway based on the S-curve so it feels alive.
+  const sway = Math.sin(progress * Math.PI * 2) * 12;
+  const baseRotation = direction === 1 ? 180 : 0;
+  const rotation = baseRotation + sway;
 
   return (
     <div
       className="pointer-events-none fixed z-30 transition-[top,left] duration-200 ease-out hidden sm:block"
       style={{ top: `${top}vh`, left: `${left}%`, transform: "translate(-50%, -50%)" }}
     >
-      <div className="relative" style={{ transform: `rotate(${Math.sin(progress * Math.PI * 2) * 18}deg)` }}>
-        {/* Thrust */}
+      <div
+        className="relative transition-transform duration-500 ease-out"
+        style={{ transform: `rotate(${rotation}deg)` }}
+      >
+        {/* Thrust — always renders below the rocket body in its local frame,
+            so when rotated 180° it appears above the rocket (pointing back up the page) */}
         <div className="absolute left-1/2 top-full -translate-x-1/2 origin-top animate-thrust">
-          <div className="h-12 w-3 rounded-b-full"
-               style={{ background: "linear-gradient(to bottom, oklch(0.95 0.15 80), oklch(0.7 0.22 30), transparent)" }} />
+          <div
+            className="h-12 w-3 rounded-b-full"
+            style={{ background: "linear-gradient(to bottom, oklch(0.95 0.15 80), oklch(0.7 0.22 30), transparent)" }}
+          />
         </div>
-        {/* Rocket body */}
+        {/* Rocket body — nose at top of svg viewBox */}
         <svg width="44" height="64" viewBox="0 0 44 64" fill="none">
           <path d="M22 2 L34 28 L34 50 L10 50 L10 28 Z" fill="oklch(0.95 0.01 240)" stroke="oklch(0.7 0.18 220)" strokeWidth="1.2"/>
           <circle cx="22" cy="24" r="4.5" fill="oklch(0.7 0.18 220)" stroke="oklch(0.95 0.01 240)" strokeWidth="1"/>
