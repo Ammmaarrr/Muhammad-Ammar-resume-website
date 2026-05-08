@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import ammarPhoto from "@/assets/ammar.jpeg";
 
+/* ========== Config ========== */
+// Change this single URL to point the CV download anywhere (PDF in /public,
+// Google Drive share link, Dropbox, etc.).
+export const CV_DOWNLOAD_URL = "/Muhammad-Ammar-CV.pdf";
+const CV_FILE_NAME = "Muhammad-Ammar-CV.pdf";
+
 /* ========== Star Field (client-only to avoid SSR/CSS precision mismatch) ========== */
 function StarField() {
   const [mounted, setMounted] = useState(false);
@@ -55,21 +61,26 @@ function StarField() {
 
 /* ========== Mission Clock ========== */
 function MissionClock() {
-  const [now, setNow] = useState(new Date());
-  const launchRef = useRef(new Date());
+  // Initialize null on server render to avoid SSR/client time mismatch.
+  const [now, setNow] = useState<Date | null>(null);
+  const launchRef = useRef<Date | null>(null);
   useEffect(() => {
+    launchRef.current = new Date();
+    setNow(new Date());
     const t = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(t);
   }, []);
-  const utc = now.toISOString().substring(11, 19);
-  const elapsed = Math.floor((now.getTime() - launchRef.current.getTime()) / 1000);
+  const utc = now ? now.toISOString().substring(11, 19) : "--:--:--";
+  const elapsed = now && launchRef.current
+    ? Math.floor((now.getTime() - launchRef.current.getTime()) / 1000)
+    : 0;
   const h = String(Math.floor(elapsed / 3600)).padStart(2, "0");
   const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, "0");
   const s = String(elapsed % 60).padStart(2, "0");
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 hud-panel border-b">
-      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-2 text-[10px] uppercase tracking-[0.2em] sm:text-xs">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-3 px-3 sm:px-4 py-2 text-[10px] uppercase tracking-[0.2em] sm:text-xs">
         <div className="flex items-center gap-3">
           <span className="flex h-2 w-2 rounded-full bg-mission-green animate-blink" />
           <span className="hidden sm:inline text-mission-green text-glow">MISSION ACTIVE</span>
@@ -89,11 +100,23 @@ function MissionClock() {
             <span className="text-foreground">AMMAR-01</span>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-[10px]">
-          <span className="text-muted-foreground hidden sm:inline">SYS</span>
-          <span className="text-mission-green">●</span>
-          <span className="text-mission-green">●</span>
-          <span className="text-warning-amber">●</span>
+        <div className="flex items-center gap-3 text-[10px]">
+          <div className="hidden lg:flex items-center gap-1.5">
+            <span className="text-muted-foreground">SYS</span>
+            <span className="text-mission-green">●</span>
+            <span className="text-mission-green">●</span>
+            <span className="text-warning-amber">●</span>
+          </div>
+          <a
+            href={CV_DOWNLOAD_URL}
+            download={CV_FILE_NAME}
+            className="hud-corner relative inline-flex items-center gap-1.5 border border-mission-green/70 bg-mission-green/15 px-2.5 py-1.5 sm:px-3 sm:py-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono whitespace-nowrap"
+            aria-label="Download CV"
+          >
+            <span aria-hidden>▼</span>
+            <span className="hidden sm:inline">Download CV</span>
+            <span className="sm:hidden">CV</span>
+          </a>
         </div>
       </div>
     </div>
@@ -259,11 +282,16 @@ function HeroSection() {
           <div className="mt-8 sm:mt-10 flex flex-col items-center gap-4">
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
               <a
-                href="/Muhammad-Ammar-CV.pdf"
-                download
-                className="hud-corner relative inline-flex items-center justify-center gap-2 border border-mission-green/70 bg-mission-green/15 px-5 py-3 text-xs uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono"
+                href={CV_DOWNLOAD_URL}
+                download={CV_FILE_NAME}
+                className="group hud-corner relative inline-flex items-center justify-center gap-3 border-2 border-mission-green bg-mission-green/20 px-7 py-4 text-sm sm:text-base uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/30 transition-all font-mono font-bold shadow-[0_0_30px_oklch(0.78_0.2_145_/_0.35)] hover:shadow-[0_0_50px_oklch(0.78_0.2_145_/_0.6)]"
+                aria-label="Download Muhammad Ammar's CV"
               >
-                ▼ Download CV
+                <span aria-hidden className="text-lg">▼</span>
+                <span>Download CV</span>
+                <span className="hidden sm:inline text-[9px] tracking-[0.2em] opacity-70 border-l border-mission-green/40 pl-3">
+                  PDF · DOSSIER
+                </span>
               </a>
               <a
                 href="#comms"
@@ -728,8 +756,8 @@ function ContactSection() {
 
           <div className="mt-6 flex justify-center">
             <a
-              href="/Muhammad-Ammar-CV.pdf"
-              download
+              href={CV_DOWNLOAD_URL}
+              download={CV_FILE_NAME}
               className="hud-corner relative inline-flex items-center gap-2 border border-mission-green/70 bg-mission-green/15 px-5 py-3 text-xs uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono"
             >
               ▼ Download Mission Dossier (CV)
