@@ -272,7 +272,7 @@ function SkillsSection() {
                 {Array.from({ length: 12 }).map((_, idx) => (
                   <div key={idx}
                     className="w-1 bg-mission-green/70"
-                    style={{ height: `${20 + Math.random() * 80}%`, opacity: 0.3 + (idx / 12) }}
+                    style={{ height: `${20 + ((idx * 37) % 80)}%`, opacity: 0.3 + (idx / 12) }}
                   />
                 ))}
               </div>
