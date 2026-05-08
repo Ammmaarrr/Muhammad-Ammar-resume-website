@@ -681,8 +681,8 @@ function EducationSection() {
 
 function ContactSection() {
   return (
-    <section className="relative py-14 pb-32 sm:py-24 sm:pb-40">
-      <div className="mx-auto max-w-3xl px-4">
+    <section id="comms" className="relative py-14 pb-32 sm:py-24 sm:pb-40 scroll-mt-24">
+      <div className="mx-auto max-w-3xl px-3 sm:px-4">
         <PlanetHeader
           code="05"
           title="Comms"
@@ -694,19 +694,31 @@ function ContactSection() {
           <div className="text-[10px] uppercase tracking-[0.3em] text-mission-green animate-blink mb-4">
             ▸ Channel Open — Awaiting Transmission
           </div>
-          <h3 className="text-2xl uppercase font-black text-foreground">Establish contact</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <h3 className="text-xl sm:text-2xl uppercase font-black text-foreground">Establish contact</h3>
+          <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
             Open a relay link to begin a new mission together.
           </p>
+
+          <div className="mt-6 flex justify-center">
+            <a
+              href="/Muhammad-Ammar-CV.pdf"
+              download
+              className="hud-corner relative inline-flex items-center gap-2 border border-mission-green/70 bg-mission-green/15 px-5 py-3 text-xs uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono"
+            >
+              ▼ Download Mission Dossier (CV)
+            </a>
+          </div>
+
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
             <a href="mailto:m.ammar.63.64@gmail.com"
                className="hud-panel hover:border-primary transition-all px-4 py-3 text-left">
               <div className="text-[9px] uppercase tracking-widest text-muted-foreground">Email Relay</div>
               <div className="mt-1 text-xs text-cosmic-cyan break-all">m.ammar.63.64@gmail.com</div>
             </a>
-            <a href="#" className="hud-panel hover:border-primary transition-all px-4 py-3 text-left">
+            <a href="https://github.com/Ammmaarrr" target="_blank" rel="noopener noreferrer"
+               className="hud-panel hover:border-primary transition-all px-4 py-3 text-left">
               <div className="text-[9px] uppercase tracking-widest text-muted-foreground">Code Repo</div>
-              <div className="mt-1 text-xs text-cosmic-cyan">GitHub → /ammar</div>
+              <div className="mt-1 text-xs text-cosmic-cyan">GitHub → /Ammmaarrr</div>
             </a>
             <a href="#" className="hud-panel hover:border-primary transition-all px-4 py-3 text-left">
               <div className="text-[9px] uppercase tracking-widest text-muted-foreground">Network</div>
