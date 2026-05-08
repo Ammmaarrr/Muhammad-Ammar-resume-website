@@ -756,8 +756,8 @@ function ContactSection() {
 
           <div className="mt-6 flex justify-center">
             <a
-              href="/Muhammad-Ammar-CV.pdf"
-              download
+              href={CV_DOWNLOAD_URL}
+              download={CV_FILE_NAME}
               className="hud-corner relative inline-flex items-center gap-2 border border-mission-green/70 bg-mission-green/15 px-5 py-3 text-xs uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono"
             >
               ▼ Download Mission Dossier (CV)
