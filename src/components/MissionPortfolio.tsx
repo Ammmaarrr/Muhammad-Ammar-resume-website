@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import ammarPhoto from "@/assets/ammar.jpeg";
 
 /* ========== Star Field ========== */
 function StarField() {
