@@ -192,7 +192,7 @@ function HeroSection() {
               { k: "ORIGIN", v: "Pakistan" },
               { k: "SECTOR", v: "GIKI" },
               { k: "CALLSIGN", v: "AMMAR-01" },
-              { k: "STATUS", v: "ENGAGED" },
+              { k: "STATUS", v: "AVAILABLE" },
             ].map((d) => (
               <div key={d.k} className="border-l-2 border-cosmic-cyan/60 pl-3">
                 <div className="text-[9px] uppercase tracking-widest text-muted-foreground">{d.k}</div>
