@@ -1,6 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import ammarPhoto from "@/assets/ammar.jpeg";
 
+/* ========== Config ========== */
+// Change this single URL to point the CV download anywhere (PDF in /public,
+// Google Drive share link, Dropbox, etc.).
+export const CV_DOWNLOAD_URL = "/Muhammad-Ammar-CV.pdf";
+const CV_FILE_NAME = "Muhammad-Ammar-CV.pdf";
+
 /* ========== Star Field (client-only to avoid SSR/CSS precision mismatch) ========== */
 function StarField() {
   const [mounted, setMounted] = useState(false);
