@@ -2,13 +2,18 @@ import { useEffect, useRef, useState } from "react";
 
 /* ========== Star Field ========== */
 function StarField() {
+  // Deterministic pseudo-random so SSR & client match (no hydration mismatch)
+  const rand = (seed: number) => {
+    const x = Math.sin(seed * 9301 + 49297) * 233280;
+    return x - Math.floor(x);
+  };
   const stars = Array.from({ length: 140 }).map((_, i) => ({
     id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    s: Math.random() * 2 + 0.4,
-    d: Math.random() * 4,
-    layer: Math.floor(Math.random() * 3),
+    x: rand(i + 1) * 100,
+    y: rand(i + 2.3) * 100,
+    s: rand(i + 5.7) * 2 + 0.4,
+    d: rand(i + 11.2) * 4,
+    layer: Math.floor(rand(i + 17.9) * 3),
   }));
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden">
@@ -187,7 +192,7 @@ function HeroSection() {
               { k: "ORIGIN", v: "Pakistan" },
               { k: "SECTOR", v: "GIKI" },
               { k: "CALLSIGN", v: "AMMAR-01" },
-              { k: "STATUS", v: "ENGAGED" },
+              { k: "STATUS", v: "AVAILABLE" },
             ].map((d) => (
               <div key={d.k} className="border-l-2 border-cosmic-cyan/60 pl-3">
                 <div className="text-[9px] uppercase tracking-widest text-muted-foreground">{d.k}</div>
@@ -267,7 +272,7 @@ function SkillsSection() {
                 {Array.from({ length: 12 }).map((_, idx) => (
                   <div key={idx}
                     className="w-1 bg-mission-green/70"
-                    style={{ height: `${20 + Math.random() * 80}%`, opacity: 0.3 + (idx / 12) }}
+                    style={{ height: `${20 + ((idx * 37) % 80)}%`, opacity: 0.3 + (idx / 12) }}
                   />
                 ))}
               </div>
@@ -351,7 +356,17 @@ function ExperienceSection() {
   );
 }
 
-const projects = [
+type Project = {
+  name: string;
+  tag: string;
+  desc: string;
+  bullets: string[];
+  stack: string[];
+  links?: { label: string; href: string }[];
+  badge?: string;
+};
+
+const projects: Project[] = [
   {
     name: "Wheels Predict",
     tag: "ML / Data Pipeline",
@@ -375,6 +390,22 @@ const projects = [
       "Live in production, 100+ bookings/mo",
     ],
     stack: ["React", "TypeScript", "Supabase", "Tailwind"],
+    badge: "LIVE",
+    links: [{ label: "Live Site ↗", href: "https://safar-e-giki.vercel.app/" }],
+  },
+  {
+    name: "Health-Care D",
+    tag: "Hackathon / HealthTech",
+    desc: "Healthcare platform contributed to during the 5th Global MIT Hackathon — forked & extended from the original team repository.",
+    bullets: [
+      "Built for the 5th Global MIT Hackathon",
+      "Forked & extended an existing team codebase",
+      "Healthcare workflows: patient & provider flows",
+      "Collaborative full-stack delivery under hackathon constraints",
+    ],
+    stack: ["React", "TypeScript", "Node", "Hackathon"],
+    badge: "HACKATHON",
+    links: [{ label: "GitHub ↗", href: "https://github.com/Ammmaarrr/health-care-d.git" }],
   },
   {
     name: "Virtual Qari",
@@ -418,7 +449,9 @@ function ProjectsSection() {
                 <div className="text-[10px] uppercase tracking-[0.3em] text-warning-amber">
                   Payload-{String(i + 1).padStart(3, "0")}
                 </div>
-                <div className="text-[10px] uppercase tracking-widest text-mission-green">▸ Deployed</div>
+                <div className="text-[10px] uppercase tracking-widest text-mission-green">
+                  ▸ {p.badge ?? "Deployed"}
+                </div>
               </div>
               <div className="mt-3 flex items-baseline justify-between gap-2">
                 <h3 className="text-2xl font-black uppercase text-foreground">{p.name}</h3>
@@ -440,6 +473,21 @@ function ProjectsSection() {
                   </span>
                 ))}
               </div>
+              {p.links && p.links.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {p.links.map((l) => (
+                    <a
+                      key={l.href}
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-sm border border-mission-green/50 bg-mission-green/10 px-2 py-1 text-[10px] uppercase tracking-widest text-mission-green hover:bg-mission-green/20 transition-colors font-mono"
+                    >
+                      {l.label}
+                    </a>
+                  ))}
+                </div>
+              )}
             </HudCard>
           ))}
         </div>
