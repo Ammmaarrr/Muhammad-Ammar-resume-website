@@ -715,6 +715,7 @@ export default function MissionPortfolio() {
         <SkillsSection />
         <ExperienceSection />
         <ProjectsSection />
+        <FeaturedMissionSection />
         <EducationSection />
         <ContactSection />
       </main>
