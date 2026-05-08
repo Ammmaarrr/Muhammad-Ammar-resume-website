@@ -61,21 +61,26 @@ function StarField() {
 
 /* ========== Mission Clock ========== */
 function MissionClock() {
-  const [now, setNow] = useState(new Date());
-  const launchRef = useRef(new Date());
+  // Initialize null on server render to avoid SSR/client time mismatch.
+  const [now, setNow] = useState<Date | null>(null);
+  const launchRef = useRef<Date | null>(null);
   useEffect(() => {
+    launchRef.current = new Date();
+    setNow(new Date());
     const t = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(t);
   }, []);
-  const utc = now.toISOString().substring(11, 19);
-  const elapsed = Math.floor((now.getTime() - launchRef.current.getTime()) / 1000);
+  const utc = now ? now.toISOString().substring(11, 19) : "--:--:--";
+  const elapsed = now && launchRef.current
+    ? Math.floor((now.getTime() - launchRef.current.getTime()) / 1000)
+    : 0;
   const h = String(Math.floor(elapsed / 3600)).padStart(2, "0");
   const m = String(Math.floor((elapsed % 3600) / 60)).padStart(2, "0");
   const s = String(elapsed % 60).padStart(2, "0");
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 hud-panel border-b">
-      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-4 px-4 py-2 text-[10px] uppercase tracking-[0.2em] sm:text-xs">
+      <div className="mx-auto flex max-w-[1600px] items-center justify-between gap-3 px-3 sm:px-4 py-2 text-[10px] uppercase tracking-[0.2em] sm:text-xs">
         <div className="flex items-center gap-3">
           <span className="flex h-2 w-2 rounded-full bg-mission-green animate-blink" />
           <span className="hidden sm:inline text-mission-green text-glow">MISSION ACTIVE</span>
