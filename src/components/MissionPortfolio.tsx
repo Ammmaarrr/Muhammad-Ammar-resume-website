@@ -100,11 +100,23 @@ function MissionClock() {
             <span className="text-foreground">AMMAR-01</span>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-[10px]">
-          <span className="text-muted-foreground hidden sm:inline">SYS</span>
-          <span className="text-mission-green">●</span>
-          <span className="text-mission-green">●</span>
-          <span className="text-warning-amber">●</span>
+        <div className="flex items-center gap-3 text-[10px]">
+          <div className="hidden lg:flex items-center gap-1.5">
+            <span className="text-muted-foreground">SYS</span>
+            <span className="text-mission-green">●</span>
+            <span className="text-mission-green">●</span>
+            <span className="text-warning-amber">●</span>
+          </div>
+          <a
+            href={CV_DOWNLOAD_URL}
+            download={CV_FILE_NAME}
+            className="hud-corner relative inline-flex items-center gap-1.5 border border-mission-green/70 bg-mission-green/15 px-2.5 py-1.5 sm:px-3 sm:py-1.5 text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono whitespace-nowrap"
+            aria-label="Download CV"
+          >
+            <span aria-hidden>▼</span>
+            <span className="hidden sm:inline">Download CV</span>
+            <span className="sm:hidden">CV</span>
+          </a>
         </div>
       </div>
     </div>
