@@ -229,11 +229,26 @@ function HeroSection() {
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col items-center gap-3">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-warning-amber animate-blink">
+          <div className="mt-8 sm:mt-10 flex flex-col items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+              <a
+                href="/Muhammad-Ammar-CV.pdf"
+                download
+                className="hud-corner relative inline-flex items-center justify-center gap-2 border border-mission-green/70 bg-mission-green/15 px-5 py-3 text-xs uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono"
+              >
+                ▼ Download CV
+              </a>
+              <a
+                href="#comms"
+                className="hud-corner relative inline-flex items-center justify-center gap-2 border border-cosmic-cyan/60 bg-cosmic-cyan/10 px-5 py-3 text-xs uppercase tracking-[0.3em] text-cosmic-cyan hover:bg-cosmic-cyan/20 transition-colors font-mono"
+              >
+                ▸ Open Comms
+              </a>
+            </div>
+            <div className="hidden sm:block text-[10px] uppercase tracking-[0.3em] text-warning-amber animate-blink">
               ▼ Initiate descent — scroll to launch ▼
             </div>
-            <div className="font-mono text-xs text-muted-foreground">
+            <div className="font-mono text-[10px] sm:text-xs text-muted-foreground text-center">
               T-MINUS 00:00:03 — IGNITION SEQUENCE START
             </div>
           </div>
