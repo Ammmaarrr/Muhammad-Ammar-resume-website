@@ -449,7 +449,9 @@ function ProjectsSection() {
                 <div className="text-[10px] uppercase tracking-[0.3em] text-warning-amber">
                   Payload-{String(i + 1).padStart(3, "0")}
                 </div>
-                <div className="text-[10px] uppercase tracking-widest text-mission-green">▸ Deployed</div>
+                <div className="text-[10px] uppercase tracking-widest text-mission-green">
+                  ▸ {p.badge ?? "Deployed"}
+                </div>
               </div>
               <div className="mt-3 flex items-baseline justify-between gap-2">
                 <h3 className="text-2xl font-black uppercase text-foreground">{p.name}</h3>
@@ -471,6 +473,21 @@ function ProjectsSection() {
                   </span>
                 ))}
               </div>
+              {p.links && p.links.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {p.links.map((l) => (
+                    <a
+                      key={l.href}
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-sm border border-mission-green/50 bg-mission-green/10 px-2 py-1 text-[10px] uppercase tracking-widest text-mission-green hover:bg-mission-green/20 transition-colors font-mono"
+                    >
+                      {l.label}
+                    </a>
+                  ))}
+                </div>
+              )}
             </HudCard>
           ))}
         </div>
