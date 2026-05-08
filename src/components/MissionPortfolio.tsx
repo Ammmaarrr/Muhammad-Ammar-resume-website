@@ -2,13 +2,18 @@ import { useEffect, useRef, useState } from "react";
 
 /* ========== Star Field ========== */
 function StarField() {
+  // Deterministic pseudo-random so SSR & client match (no hydration mismatch)
+  const rand = (seed: number) => {
+    const x = Math.sin(seed * 9301 + 49297) * 233280;
+    return x - Math.floor(x);
+  };
   const stars = Array.from({ length: 140 }).map((_, i) => ({
     id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    s: Math.random() * 2 + 0.4,
-    d: Math.random() * 4,
-    layer: Math.floor(Math.random() * 3),
+    x: rand(i + 1) * 100,
+    y: rand(i + 2.3) * 100,
+    s: rand(i + 5.7) * 2 + 0.4,
+    d: rand(i + 11.2) * 4,
+    layer: Math.floor(rand(i + 17.9) * 3),
   }));
   return (
     <div className="pointer-events-none fixed inset-0 overflow-hidden">
