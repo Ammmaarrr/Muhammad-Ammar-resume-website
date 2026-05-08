@@ -150,7 +150,7 @@ function PlanetHeader({
         </div>
       </div>
       <div className="text-[10px] uppercase tracking-[0.4em] text-cosmic-cyan">{subtitle}</div>
-      <h2 className="mt-2 text-3xl font-black uppercase sm:text-5xl text-glow" style={{ color }}>{title}</h2>
+      <h2 className="mt-2 text-2xl font-black uppercase sm:text-5xl text-glow" style={{ color }}>{title}</h2>
       <div className="mt-3 flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
         <span className="h-px w-12 bg-border" />
         <span>Approaching target</span>
