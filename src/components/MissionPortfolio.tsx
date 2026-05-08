@@ -283,7 +283,7 @@ const skills = [
 
 function SkillsSection() {
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
         <PlanetHeader
           code="01"
@@ -354,7 +354,7 @@ const experience = [
 
 function ExperienceSection() {
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-5xl px-4">
         <PlanetHeader
           code="02"
@@ -476,7 +476,7 @@ const projects: Project[] = [
 
 function ProjectsSection() {
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
         <PlanetHeader
           code="03"
@@ -549,7 +549,7 @@ function FeaturedMissionSection() {
     { code: "F-06", title: "Modular Architecture", body: "Composable agents, tools, and data adapters — easy to extend with new clinical workflows." },
   ];
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
         <PlanetHeader
           code="03+"
@@ -652,7 +652,7 @@ function EducationSection() {
     { name: "SQL", org: "Udemy", year: "Cert.", note: "Certification" },
   ];
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-5xl px-4">
         <PlanetHeader
           code="04"
@@ -681,7 +681,7 @@ function EducationSection() {
 
 function ContactSection() {
   return (
-    <section className="relative py-24 pb-40">
+    <section className="relative py-14 pb-32 sm:py-24 sm:pb-40">
       <div className="mx-auto max-w-3xl px-4">
         <PlanetHeader
           code="05"
