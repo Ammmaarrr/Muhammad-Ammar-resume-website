@@ -520,6 +520,111 @@ function ProjectsSection() {
   );
 }
 
+function FeaturedMissionSection() {
+  const features = [
+    { code: "F-01", title: "Agentic Orchestration", body: "Autonomous agents coordinate clinical reasoning across symptom intake, triage, and recommendations." },
+    { code: "F-02", title: "Patient Intelligence", body: "Personalized health summaries derived from longitudinal records and live signals." },
+    { code: "F-03", title: "Provider Copilot", body: "Decision-support surface for clinicians: differential prompts, references, and follow-up planning." },
+    { code: "F-04", title: "Conversational Interface", body: "Natural-language chat layer powered by LLMs, with grounded retrieval and tool use." },
+    { code: "F-05", title: "Hackathon Heritage", body: "Forked from the original team repo and extended for the 5th Global MIT Hackathon." },
+    { code: "F-06", title: "Modular Architecture", body: "Composable agents, tools, and data adapters — easy to extend with new clinical workflows." },
+  ];
+  return (
+    <section className="relative py-24">
+      <div className="mx-auto max-w-6xl px-4">
+        <PlanetHeader
+          code="03+"
+          title="Featured Mission"
+          subtitle="Deep Scan — Payload Spotlight"
+          color="oklch(0.78 0.2 145)"
+          ringColor="oklch(0.78 0.2 145 / 0.5)"
+        />
+        <HudCard>
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <div className="text-[10px] uppercase tracking-[0.4em] text-warning-amber">
+                Mission Dossier — MIT-05
+              </div>
+              <h3 className="mt-2 text-3xl sm:text-4xl font-black uppercase text-foreground leading-tight">
+                Agentic Healthcare
+                <br />
+                <span className="text-mission-green">Intelligence System</span>
+              </h3>
+              <div className="mt-2 text-xs uppercase tracking-[0.3em] text-cosmic-cyan">
+                5th Global MIT Hackathon · Forked & Extended
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <a
+                href="https://github.com/Ammmaarrr/health-care-d.git"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-sm border border-mission-green/60 bg-mission-green/10 px-3 py-2 text-[10px] uppercase tracking-widest text-mission-green hover:bg-mission-green/20 transition-colors font-mono"
+              >
+                ▸ GitHub Repo ↗
+              </a>
+              <span className="rounded-sm border border-border bg-background/40 px-3 py-2 text-[10px] uppercase tracking-widest text-muted-foreground font-mono">
+                Live Link · TBA
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-6 border-t border-border pt-5">
+            <div className="text-[10px] uppercase tracking-[0.3em] text-cosmic-cyan mb-2">
+              ▸ Overview
+            </div>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              An agentic AI system designed to assist healthcare workflows through
+              coordinated, autonomous agents. The platform pairs patient-facing
+              intelligence with a clinician copilot, using LLM-driven reasoning
+              and tool use to triage, summarize, and recommend next steps. Forked
+              from the original hackathon team repository and extended with
+              additional agents and UX refinements during the 5th Global MIT
+              Hackathon.
+            </p>
+          </div>
+
+          <div className="mt-6">
+            <div className="text-[10px] uppercase tracking-[0.3em] text-cosmic-cyan mb-3">
+              ▸ Key Features
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {features.map((f) => (
+                <div
+                  key={f.code}
+                  className="hud-corner relative border border-border bg-background/30 p-3"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="font-mono text-[10px] text-cosmic-cyan">{f.code}</span>
+                    <span className="text-[10px] text-mission-green">● ACTIVE</span>
+                  </div>
+                  <div className="mt-1 text-sm font-bold uppercase text-foreground">
+                    {f.title}
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                    {f.body}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 flex flex-wrap gap-1.5 border-t border-border pt-4">
+            {["React", "TypeScript", "Agentic AI", "LLM", "Tool Use", "Hackathon"].map((s) => (
+              <span
+                key={s}
+                className="rounded-sm border border-primary/40 bg-primary/10 px-2 py-0.5 text-[10px] uppercase text-primary font-mono"
+              >
+                {s}
+              </span>
+            ))}
+          </div>
+        </HudCard>
+      </div>
+    </section>
+  );
+}
+
 function EducationSection() {
   const records = [
     { name: "BS Software Engineering", org: "GIKI", year: "2023 — Present", note: "Bachelor of Science" },
