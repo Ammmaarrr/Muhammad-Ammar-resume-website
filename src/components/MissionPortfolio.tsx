@@ -1,14 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import ammarPhoto from "@/assets/ammar.jpeg";
 
-/* ========== Star Field ========== */
+/* ========== Star Field (client-only to avoid SSR/CSS precision mismatch) ========== */
 function StarField() {
-  // Deterministic pseudo-random so SSR & client match (no hydration mismatch)
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
   const rand = (seed: number) => {
     const x = Math.sin(seed * 9301 + 49297) * 233280;
     return x - Math.floor(x);
   };
-  const stars = Array.from({ length: 140 }).map((_, i) => ({
+  // Fewer stars on small screens
+  const isSmall = typeof window !== "undefined" && window.innerWidth < 640;
+  const count = isSmall ? 70 : 140;
+  const stars = Array.from({ length: count }).map((_, i) => ({
     id: i,
     x: rand(i + 1) * 100,
     y: rand(i + 2.3) * 100,
@@ -33,10 +38,9 @@ function StarField() {
           }}
         />
       ))}
-      {/* Nebula blobs */}
-      <div className="absolute -top-20 -left-20 h-[500px] w-[500px] rounded-full blur-3xl opacity-30"
+      <div className="absolute -top-20 -left-20 h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] rounded-full blur-3xl opacity-30"
            style={{ background: "radial-gradient(circle, oklch(0.5 0.25 290), transparent 70%)" }} />
-      <div className="absolute top-1/2 -right-40 h-[600px] w-[600px] rounded-full blur-3xl opacity-25"
+      <div className="absolute top-1/2 -right-40 h-[400px] w-[400px] sm:h-[600px] sm:w-[600px] rounded-full blur-3xl opacity-25"
            style={{ background: "radial-gradient(circle, oklch(0.55 0.22 220), transparent 70%)" }} />
     </div>
   );
@@ -108,7 +112,7 @@ function Rocket() {
 
   return (
     <div
-      className="pointer-events-none fixed z-30 transition-[top,left] duration-200 ease-out"
+      className="pointer-events-none fixed z-30 transition-[top,left] duration-200 ease-out hidden sm:block"
       style={{ top: `${top}vh`, left: `${left}%`, transform: "translate(-50%, -50%)" }}
     >
       <div className="relative" style={{ transform: `rotate(${Math.sin(progress * Math.PI * 2) * 18}deg)` }}>
@@ -136,7 +140,7 @@ function PlanetHeader({
 }: { code: string; title: string; subtitle: string; color: string; ringColor: string }) {
   return (
     <div className="relative mb-12 flex flex-col items-center text-center">
-      <div className="relative mb-6 h-40 w-40 sm:h-52 sm:w-52">
+      <div className="relative mb-6 h-28 w-28 sm:h-52 sm:w-52">
         <div className="absolute inset-0 rounded-full animate-pulse-ring" style={{ border: `2px solid ${ringColor}` }} />
         <div className="absolute inset-2 rounded-full animate-spin-slow"
              style={{ background: `radial-gradient(circle at 30% 30%, ${color}, oklch(0.1 0.04 260) 80%)`,
@@ -146,7 +150,7 @@ function PlanetHeader({
         </div>
       </div>
       <div className="text-[10px] uppercase tracking-[0.4em] text-cosmic-cyan">{subtitle}</div>
-      <h2 className="mt-2 text-3xl font-black uppercase sm:text-5xl text-glow" style={{ color }}>{title}</h2>
+      <h2 className="mt-2 text-2xl font-black uppercase sm:text-5xl text-glow" style={{ color }}>{title}</h2>
       <div className="mt-3 flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-muted-foreground">
         <span className="h-px w-12 bg-border" />
         <span>Approaching target</span>
@@ -159,7 +163,7 @@ function PlanetHeader({
 /* ========== Data lines ========== */
 function HudCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`hud-corner relative hud-panel scanline overflow-hidden p-5 ${className}`}>
+    <div className={`hud-corner relative hud-panel scanline overflow-hidden p-3 sm:p-5 ${className}`}>
       {children}
     </div>
   );
@@ -168,9 +172,9 @@ function HudCard({ children, className = "" }: { children: React.ReactNode; clas
 /* ========== Sections ========== */
 function HeroSection() {
   return (
-    <section className="relative min-h-screen pt-24 pb-32">
+    <section className="relative min-h-screen pt-20 pb-20 sm:pt-24 sm:pb-32">
       <div className="absolute inset-0 grid-bg opacity-30" />
-      <div className="relative mx-auto max-w-5xl px-4">
+      <div className="relative mx-auto max-w-5xl px-3 sm:px-4">
         <div className="mb-6 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-cosmic-cyan">
           <span className="h-px flex-1 bg-cosmic-cyan/40" />
           <span>Mission Briefing — Doc #001</span>
@@ -200,13 +204,13 @@ function HeroSection() {
             </div>
 
             <div>
-              <h1 className="text-5xl font-black uppercase sm:text-6xl md:text-7xl text-glow text-foreground leading-[0.95]">
+              <h1 className="text-4xl font-black uppercase sm:text-6xl md:text-7xl text-glow text-foreground leading-[0.95]">
                 Muhammad
                 <br />
                 <span className="text-primary">Ammar</span>
               </h1>
-              <div className="mt-3 text-xs sm:text-sm uppercase tracking-[0.3em] text-cosmic-cyan">
-                Software Engineer • ML Enthusiast • Entrepreneur
+              <div className="mt-3 text-[10px] sm:text-sm uppercase tracking-[0.25em] sm:tracking-[0.3em] text-cosmic-cyan">
+                Software Engineer • ML • Entrepreneur
               </div>
             </div>
           </div>
@@ -225,11 +229,26 @@ function HeroSection() {
             ))}
           </div>
 
-          <div className="mt-10 flex flex-col items-center gap-3">
-            <div className="text-[10px] uppercase tracking-[0.3em] text-warning-amber animate-blink">
+          <div className="mt-8 sm:mt-10 flex flex-col items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+              <a
+                href="/Muhammad-Ammar-CV.pdf"
+                download
+                className="hud-corner relative inline-flex items-center justify-center gap-2 border border-mission-green/70 bg-mission-green/15 px-5 py-3 text-xs uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono"
+              >
+                ▼ Download CV
+              </a>
+              <a
+                href="#comms"
+                className="hud-corner relative inline-flex items-center justify-center gap-2 border border-cosmic-cyan/60 bg-cosmic-cyan/10 px-5 py-3 text-xs uppercase tracking-[0.3em] text-cosmic-cyan hover:bg-cosmic-cyan/20 transition-colors font-mono"
+              >
+                ▸ Open Comms
+              </a>
+            </div>
+            <div className="hidden sm:block text-[10px] uppercase tracking-[0.3em] text-warning-amber animate-blink">
               ▼ Initiate descent — scroll to launch ▼
             </div>
-            <div className="font-mono text-xs text-muted-foreground">
+            <div className="font-mono text-[10px] sm:text-xs text-muted-foreground text-center">
               T-MINUS 00:00:03 — IGNITION SEQUENCE START
             </div>
           </div>
@@ -264,7 +283,7 @@ const skills = [
 
 function SkillsSection() {
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
         <PlanetHeader
           code="01"
@@ -335,7 +354,7 @@ const experience = [
 
 function ExperienceSection() {
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-5xl px-4">
         <PlanetHeader
           code="02"
@@ -457,7 +476,7 @@ const projects: Project[] = [
 
 function ProjectsSection() {
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
         <PlanetHeader
           code="03"
@@ -530,7 +549,7 @@ function FeaturedMissionSection() {
     { code: "F-06", title: "Modular Architecture", body: "Composable agents, tools, and data adapters — easy to extend with new clinical workflows." },
   ];
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-6xl px-4">
         <PlanetHeader
           code="03+"
@@ -633,7 +652,7 @@ function EducationSection() {
     { name: "SQL", org: "Udemy", year: "Cert.", note: "Certification" },
   ];
   return (
-    <section className="relative py-24">
+    <section className="relative py-14 sm:py-24">
       <div className="mx-auto max-w-5xl px-4">
         <PlanetHeader
           code="04"
@@ -662,8 +681,8 @@ function EducationSection() {
 
 function ContactSection() {
   return (
-    <section className="relative py-24 pb-40">
-      <div className="mx-auto max-w-3xl px-4">
+    <section id="comms" className="relative py-14 pb-32 sm:py-24 sm:pb-40 scroll-mt-24">
+      <div className="mx-auto max-w-3xl px-3 sm:px-4">
         <PlanetHeader
           code="05"
           title="Comms"
@@ -675,19 +694,31 @@ function ContactSection() {
           <div className="text-[10px] uppercase tracking-[0.3em] text-mission-green animate-blink mb-4">
             ▸ Channel Open — Awaiting Transmission
           </div>
-          <h3 className="text-2xl uppercase font-black text-foreground">Establish contact</h3>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <h3 className="text-xl sm:text-2xl uppercase font-black text-foreground">Establish contact</h3>
+          <p className="mt-2 text-xs sm:text-sm text-muted-foreground">
             Open a relay link to begin a new mission together.
           </p>
+
+          <div className="mt-6 flex justify-center">
+            <a
+              href="/Muhammad-Ammar-CV.pdf"
+              download
+              className="hud-corner relative inline-flex items-center gap-2 border border-mission-green/70 bg-mission-green/15 px-5 py-3 text-xs uppercase tracking-[0.3em] text-mission-green hover:bg-mission-green/25 transition-colors font-mono"
+            >
+              ▼ Download Mission Dossier (CV)
+            </a>
+          </div>
+
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
             <a href="mailto:m.ammar.63.64@gmail.com"
                className="hud-panel hover:border-primary transition-all px-4 py-3 text-left">
               <div className="text-[9px] uppercase tracking-widest text-muted-foreground">Email Relay</div>
               <div className="mt-1 text-xs text-cosmic-cyan break-all">m.ammar.63.64@gmail.com</div>
             </a>
-            <a href="#" className="hud-panel hover:border-primary transition-all px-4 py-3 text-left">
+            <a href="https://github.com/Ammmaarrr" target="_blank" rel="noopener noreferrer"
+               className="hud-panel hover:border-primary transition-all px-4 py-3 text-left">
               <div className="text-[9px] uppercase tracking-widest text-muted-foreground">Code Repo</div>
-              <div className="mt-1 text-xs text-cosmic-cyan">GitHub → /ammar</div>
+              <div className="mt-1 text-xs text-cosmic-cyan">GitHub → /Ammmaarrr</div>
             </a>
             <a href="#" className="hud-panel hover:border-primary transition-all px-4 py-3 text-left">
               <div className="text-[9px] uppercase tracking-widest text-muted-foreground">Network</div>
