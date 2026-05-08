@@ -1,0 +1,6 @@
+{
+  "buildCommand": "npm run build:static && mv dist-static/index.static.html dist-static/index.html",
+  "outputDirectory": "dist-static",
+  "framework": null,
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+}
