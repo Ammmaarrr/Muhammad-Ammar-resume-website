@@ -112,7 +112,7 @@ function Rocket() {
 
   return (
     <div
-      className="pointer-events-none fixed z-30 transition-[top,left] duration-200 ease-out"
+      className="pointer-events-none fixed z-30 transition-[top,left] duration-200 ease-out hidden sm:block"
       style={{ top: `${top}vh`, left: `${left}%`, transform: "translate(-50%, -50%)" }}
     >
       <div className="relative" style={{ transform: `rotate(${Math.sin(progress * Math.PI * 2) * 18}deg)` }}>
