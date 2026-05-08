@@ -172,9 +172,9 @@ function HudCard({ children, className = "" }: { children: React.ReactNode; clas
 /* ========== Sections ========== */
 function HeroSection() {
   return (
-    <section className="relative min-h-screen pt-24 pb-32">
+    <section className="relative min-h-screen pt-20 pb-20 sm:pt-24 sm:pb-32">
       <div className="absolute inset-0 grid-bg opacity-30" />
-      <div className="relative mx-auto max-w-5xl px-4">
+      <div className="relative mx-auto max-w-5xl px-3 sm:px-4">
         <div className="mb-6 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-cosmic-cyan">
           <span className="h-px flex-1 bg-cosmic-cyan/40" />
           <span>Mission Briefing — Doc #001</span>
