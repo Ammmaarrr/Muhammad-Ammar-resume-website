@@ -163,7 +163,7 @@ function PlanetHeader({
 /* ========== Data lines ========== */
 function HudCard({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <div className={`hud-corner relative hud-panel scanline overflow-hidden p-5 ${className}`}>
+    <div className={`hud-corner relative hud-panel scanline overflow-hidden p-3 sm:p-5 ${className}`}>
       {children}
     </div>
   );
