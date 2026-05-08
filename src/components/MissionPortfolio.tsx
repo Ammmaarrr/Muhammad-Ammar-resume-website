@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import ammarPhoto from "@/assets/ammar.jpeg";
 
 /* ========== Star Field ========== */
 function StarField() {
@@ -178,13 +179,36 @@ function HeroSection() {
 
         <HudCard className="text-center">
           <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">Astronaut Profile</div>
-          <h1 className="mt-4 text-5xl font-black uppercase sm:text-7xl md:text-8xl text-glow text-foreground">
-            Muhammad
-            <br />
-            <span className="text-primary">Ammar</span>
-          </h1>
-          <div className="mt-4 text-sm uppercase tracking-[0.3em] text-cosmic-cyan">
-            Software Engineer • ML Enthusiast • Entrepreneur
+
+          <div className="mt-6 flex flex-col items-center gap-5 sm:flex-row sm:items-center sm:justify-center sm:text-left">
+            <div className="relative shrink-0">
+              <div className="absolute -inset-1 rounded-full border border-cosmic-cyan/40 animate-pulse-ring" />
+              <div className="absolute -inset-3 rounded-full border border-primary/20" />
+              <div
+                className="relative h-32 w-32 sm:h-40 sm:w-40 rounded-full overflow-hidden border-2 border-cosmic-cyan/60"
+                style={{ boxShadow: "0 0 40px oklch(0.7 0.18 220 / 0.4), inset 0 0 30px oklch(0 0 0 / 0.4)" }}
+              >
+                <img
+                  src={ammarPhoto}
+                  alt="Muhammad Ammar — Astronaut Profile"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-sm bg-mission-green/20 border border-mission-green/60 px-2 py-0.5 text-[8px] font-mono uppercase tracking-widest text-mission-green">
+                ID-01
+              </div>
+            </div>
+
+            <div>
+              <h1 className="text-5xl font-black uppercase sm:text-6xl md:text-7xl text-glow text-foreground leading-[0.95]">
+                Muhammad
+                <br />
+                <span className="text-primary">Ammar</span>
+              </h1>
+              <div className="mt-3 text-xs sm:text-sm uppercase tracking-[0.3em] text-cosmic-cyan">
+                Software Engineer • ML Enthusiast • Entrepreneur
+              </div>
+            </div>
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4 text-left">
