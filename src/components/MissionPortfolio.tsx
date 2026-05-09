@@ -329,7 +329,7 @@ function HeroSection() {
 
 const skills = [
   { cat: "Languages", items: ["Python", "JavaScript", "TypeScript", "SQL", "HTML", "CSS"] },
-  { cat: "Frontend", items: ["React", "Vite", "Tailwind", "Radix UI", "Recharts"] },
+  { cat: "Frontend", items: ["React", "Vite", "Tailwind", "Responsive Design"] },
   { cat: "Backend & DB", items: ["Supabase", "PostgreSQL", "Flask", "FastAPI", "REST"] },
   { cat: "ML & Data", items: ["PyTorch", "Scikit-learn", "Pandas", "NumPy", "XGBoost"] },
   { cat: "Scraping", items: ["Scrapy", "BeautifulSoup", "Selenium"] },
@@ -399,10 +399,10 @@ const experience = [
     org: "Safar-e-GIKI",
     year: "2024 — Present",
     log: [
-      "Founded transport booking service for GIKI students to major cities",
-      "End-to-end ops: bookings, customer support, vendor coordination",
-      "Real-time seat inventory, payment tracking, trip scheduling",
-      "Built and deployed booking platform — 100+ bookings/month",
+      "Eliminated multi-transit hassle for GIKI students traveling to Multan and Bahawalpur",
+      "Launched a one-stop direct bus service with hostel-gate pickup and on-board amenities on par with Daewoo and Faisal Movers",
+      "Built and deployed a full-stack booking platform: seat selection, payments, and printable tickets",
+      "Personally managed the database, customer queries, and vendor coordination — 100+ bookings per vacation",
     ],
   },
 ];
@@ -480,12 +480,12 @@ const projects: Project[] = [
   {
     name: "Safar-e-GIKI",
     tag: "Full-Stack Platform",
-    desc: "Bus ticket booking platform for GIKI students traveling to Islamabad and Multan.",
+    desc: "Direct bus booking platform for GIKI students traveling to Multan and Bahawalpur, with hostel-gate pickup and on-board amenities on par with Daewoo and Faisal Movers.",
     bullets: [
-      "Seat selection & real-time bookings",
-      "Payment integration + admin analytics",
-      "Built with React, TS, Supabase realtime",
-      "Live in production, 100+ bookings/mo",
+      "Seat selection, payments, and printable tickets",
+      "Admin analytics with database & vendor coordination",
+      "Built with React, TypeScript, and Supabase",
+      "Live in production — 100+ bookings per vacation",
     ],
     stack: ["React", "TypeScript", "Supabase", "Tailwind"],
     badge: "LIVE",
